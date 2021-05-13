@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ProductManagement"
+    }
+  },
+  "defaultProject": "ProductManagement",
+  "cli": {
+    "analytics": false
+  }
 }
