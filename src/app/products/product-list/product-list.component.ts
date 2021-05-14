@@ -1,21 +1,33 @@
 import { Component, OnInit } from '@angular/core';
+import { IProduct } from '../product';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent {
+export class ProductListComponent implements OnInit {
   pageTitle: string = 'Product List';
   showImage: boolean = false;
-  products: any[] = [
+  // listFilter: string = 'Cart';
+  private _listFilter: string = '';
+  get listFilter(): string {
+    return this._listFilter;
+  }
+  set listFilter(value: string) {
+    this._listFilter = value;
+    console.log("Setter value is: ", this._listFilter);
+    this.filteredProducts = this.performedFilter(value);
+  }
+  filteredProducts: IProduct[] = [];
+  products: IProduct[] = [
     {
       "productId": 2,
       "productName": "Garden Cart",
       "productCode": "GDN-0023",
       "releaseDate": "March 18, 2021",
       "description": "15 gallon capacity rolling.",
-      "price": 32.99,
+      "price": 32.990,
       "starRating": 4.2,
       "imageUrl": "assets/images/garden_cart.png"
     },
@@ -32,7 +44,12 @@ export class ProductListComponent {
   ];
   constructor() { }
 
+  performedFilter(filteredBy: string): IProduct[] {
+    filteredBy = filteredBy.toLocaleLowerCase();
+    return this.products.filter((product: IProduct) => product.productName.toLocaleLowerCase().includes(filteredBy));
+  }
   ngOnInit(): void {
+    this.listFilter = 'cart';
   }
 
   toggleImage(): void {

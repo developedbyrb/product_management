@@ -8,12 +8,12 @@
                 Filter by:
             </div>
             <div class="col-md-4">
-                <input type="text">
+                <input type="text" [(ngModel)]="listFilter">
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                Filtered by:
+                Filtered by: {{listFilter}}
             </div>
         </div>
         <div class="table-responsive">
@@ -33,15 +33,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let product of products">
+                    <tr *ngFor="let product of filteredProducts">
                         <td>
                             <img *ngIf="showImage" class="product-images" [src]="product.imageUrl"
                                 [title]="product.productName">
                         </td>
                         <td>{{product.productName}}</td>
-                        <td>{{product.productCode}}</td>
+                        <td>{{product.productCode | lowercase | convertToSpaces:'-'}}</td>
                         <td>{{product.releaseDate}}</td>
-                        <td>{{product.price}}</td>
+                        <td>{{product.price | currency:'INR':'symbol':'1.2-2'}}</td>
                         <td>{{product.starRating}}</td>
                     </tr>
                 </tbody>
